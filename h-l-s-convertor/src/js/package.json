@@ -1,0 +1,29 @@
+{
+  "name": "kurento-module-hlsconvertor",
+  "version": "0.0.1-dev",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepublish": "grunt"
+  },
+  "dependencies": {
+    "es6-promise": "^2.0.1",
+    "inherits": "^2.0.1",
+    "promisecallback": "^0.0.3"
+  },
+  "devDependencies": {
+    "bower": "~1.4.1",
+    "grunt": "~0.4.5",
+    "grunt-browserify": "^3.6.0",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-jsdoc": "^0.6.3",
+    "grunt-npm2bower-sync": "^0.9.1",
+    "minifyify": "^6.4.0"
+  },
+  "keywords": [
+    "Kurento",
+    "module",
+    "plugin"
+  ]
+}

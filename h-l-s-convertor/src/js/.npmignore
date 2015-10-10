@@ -1,0 +1,4 @@
+dist/
+doc/
+bower.json
+Gruntfile.js
