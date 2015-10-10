@@ -70,6 +70,16 @@ vi package.json
   "kurento-module-hlsconvertor": "0.0.1-dev",
 # run the backend server.
 cd ../..
+vi server.js
+  (Change the line, the actual ip address of the running kurento media server)
+        ws_uri: 'ws://192.168.17.197:8888/kurento'
+
+  (Add below code where webRtcEndpoint is created)
+                pipeline.create('HLSConvertor', function(error, hlsconvertor) {
+                    console.log("-------------------------creating HLSConvertor-------------------------\n"+webRtcEndpoint);
+                    webRtcEndpoint.connect(hlsconvertor);
+                    console.log("-------------------------creating HLSConvertor finished!-------------------------");
+                });
 node server.js
 
 
