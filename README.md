@@ -1,35 +1,66 @@
+Install Vagrant and load Ubuntu virutal OS
+============
+
+See:
+[vagrant](https://www.vagrantup.com/downloads.html)
+[boxes trusty64](https://atlas.hashicorp.com/ubuntu/boxes/trusty64) 
+```
+# virtual port to Ubuntu, using virtual box.
+vagrant init ubuntu/trusty64; vagrant up --provider virtualbox
+
+# make sure the virtual machine's memory is above 1GB
+# make sure the virtual machine using bridge mode by commenting out the line in ~/Vagrantfile:
+#   config.vm.network "public_network"
+vagrant ssh
+```
+
+Install kurento-media-server, node.js
+============
+```
+# Install kurento-media-server on the Ubuntu virtual OS: (user:vagrant paw:vagrant)
+echo "deb http://ubuntu.kurento.org trusty-dev kms6" | sudo tee /etc/apt/sources.list.d/kurento-dev.list
+wget -O - http://ubuntu.kurento.org/kurento.gpg.key | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install -y kurento-media-server-6.0-dev
+sudo apt-get install -y build-essential libtool autotools-dev  automake indent astyle git
+sudo apt-get install -y libboost-all-dev libjson-glib-dev bison flex uuid-dev libsoup2.4-dev 
+
+sudo service kurento-media-server-6.0 start
+
 curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
 sudo apt-get install -y nodejs
 sudo npm install npm -g
 
 npm install
 npm start
+```
 
 
+Building and installing HLS Convertor
+=====================================
+```
+cd HLSConvertor/h-l-s-convertor
+mkdir .build
+cd .build
+cmake .. -DGENERATE_JS_CLIENT_PROJECT=TRUE
+make
 
-***********************************************
-* Install Vagrant and load Ubuntu virutal OS
-***********************************************
-See:
-https://www.vagrantup.com/downloads.html
-https://atlas.hashicorp.com/ubuntu/boxes/trusty64
+# copy the generated so file to system's lib folder.
+sudo cp ./src/server/*.so /usr/lib/x86_64-linux-gnu/gstreamer-1.5/
+sudo cp ./src/gst-plugins/*.so /usr/lib/x86_64-linux-gnu/kurento/modules/
 
-# virtual port to Ubuntu, using virtual box.
-vagrant init ubuntu/trusty64; vagrant up --provider virtualbox
-# make sure the virtual machine's memory is above 1GB
-# make sure the virtual machine using bridge mode by commenting out the line in ~/Vagrantfile:
-#   config.vm.network "public_network"
-vagrant ssh
-
-# Install kurento-media-server on the Ubuntu virtual OS: (user:vagrant paw:vagrant)
-echo "deb http://ubuntu.kurento.org trusty-dev kms6" | sudo tee /etc/apt/sources.list.d/kurento-dev.list
-wget -O - http://ubuntu.kurento.org/kurento.gpg.key | sudo apt-key add -
-sudo apt-get update
-sudo apt-get install kurento-media-server-6.0
-
-sudo service kurento-media-server-6.0 start
+# copy the generated js code to current project.
+cp -r ./js ../../kurento-one2many-call/node_modules/kurento-client/node_modules/kurento-module-hlsconvertor/
+vi ../../kurento-one2many-call/node_modules/kurento-client/lib/index.js
+  # (Add one line)
+  register('kurento-module-hlsconvertor')
+```
 
 
+cd node_modules/kurento-client/
+vi lib/index.js
+  (Add one line)
+  register('kurento-module-hlsconvertor')
 
 **********************************
 * building kurento media server
