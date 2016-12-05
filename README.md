@@ -1,3 +1,12 @@
+curl -sL https://deb.nodesource.com/setup_4.x | sudo bash -
+sudo apt-get install -y nodejs
+sudo npm install npm -g
+
+npm install
+npm start
+
+
+
 ***********************************************
 * Install Vagrant and load Ubuntu virutal OS
 ***********************************************
