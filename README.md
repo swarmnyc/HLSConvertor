@@ -104,7 +104,7 @@ vi lib/index.js
   (Add one line)
   register('kurento-module-hlsconvertor')
 # copy the generated js code to current project.
-cp -r /home/vagrant/swarmnyc/HLSConvertor/h-l-s-convertor/src/js/ ./node-modules/kurento-module-hlsconvertor/
+cp -r /home/vagrant/swarmnyc/HLSConvertor/h-l-s-convertor/src/js/ ./node_modules/kurento-module-hlsconvertor/
 vi package.json
   (Add one line in the "dependencies" block)
   "kurento-module-hlsconvertor": "0.0.1-dev",
